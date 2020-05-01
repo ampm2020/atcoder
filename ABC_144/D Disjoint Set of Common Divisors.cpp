@@ -12,7 +12,7 @@ constexpr long long INF = 1000000000LL;
 template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; } return 0; }
 template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }
 
-const int MAX = 2100000;
+const int MAX = 210000;
 
 long long fac[MAX], finv[MAX], inv[MAX];
 void COMinit(){
@@ -61,5 +61,6 @@ int main(){
   vector<pll> vc = prime_factorize(n);
   
   cout << vc.size() + 1 << ln;
+
 }
   
