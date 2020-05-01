@@ -12,33 +12,36 @@ constexpr long long INF = 1000000000LL;
 template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; } return 0; }
 template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }
 
-int n;
-vector<vector<int>> happy(100010, vector<int>(3,0));
-vector<vector<int>> dp(100010, vector<int>(3, 0));
+int N, W;
+vector<ll> w, v;
+vector<vector<ll>> dp;
 
-int rec(int x, int y){
-    if(x == 0) return 0;
-    if(dp[x][y] != 0) return dp[x][y];
+ll rec(ll n, ll weight){
+    if(n == N) return 0;
+
+    if(dp[n][weight] != -1) return dp[n][weight];
+
     
-    rep(i, 3){
-        if(i == y) continue;
-        chmax(dp[x][y], rec(x-1, i) + happy[x-1][i]);
-    }
-    return dp[x][y];
+    ll res;
+    if(weight + w[n] <= W)
+        res = max(rec(n+1, weight),
+              rec(n+1, weight+w[n]) + v[n]);
+    else
+        res = rec(n+1, weight);
+
+    return dp[n][weight] = res;
 }
 
 int main(){
-    cin >> n;
-    rep(i, n){
-        rep(j, 3){
-            cin >> happy[i][j];
-        }
+    cin >> N >> W;
+    rep(i, N){
+        ll a, b; cin >> a >> b;
+        w.push_back(a);
+        v.push_back(b);
     }
-    rep(i, 3) rec(n, i);
+    dp.assign(N+10, vector<ll>(W + 10, -1));
 
-    int ans = max(max(dp[n][0], dp[n][1]), dp[n][2]);
+    ll ans = rec(0, 0);
+
     cout << ans << ln;
 }
-    
-
-    
