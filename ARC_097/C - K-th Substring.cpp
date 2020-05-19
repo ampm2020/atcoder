@@ -15,29 +15,26 @@ template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; }
 
 
 int main() {    
-    int n, m; cin >> n >> m;
-    vector<vector<int>> G(n, vector<int>());
-    rep(i, m){
-        int a, b; cin >> a >> b; a--; b--;
-        G[a].push_back(b);
-        G[b].push_back(a);
-    }
-    vector<int> seen(n, -1);
-    seen[0] = 0;
-    queue<int> que;
-    que.push(0);
+    string s; int k; cin >> s >> k;
 
-    while(!que.empty()){
-        int pos = que.front(); que.pop();
-        for(int e: G[pos]){
-            if(seen[e] != -1) continue;
-            seen[e] = pos;
-            que.push(e);
+    set<string> used;
+    bool fg = false;
+
+    vector<string> substrings;
+    rep(i, s.size()){
+        substrings.push_back(s.substr(i));
+    }
+    sort(all(substrings));
+    for(string t: substrings){
+        if(fg) break;
+        rep(i, t.size()){
+            string u = t.substr(0, i+1);
+            used.insert(u);
+            if(used.size() == k && !fg){
+                cout << u << ln;
+                fg = true;
+                break;
+            }
         }
-    }
-    cout << "Yes" << ln;
-    for(int i=1; i<n; i++){
-        cout << seen[i] + 1 << ln;
-    }
-
-}
+    }    
+} 

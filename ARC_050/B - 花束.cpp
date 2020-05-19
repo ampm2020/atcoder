@@ -15,29 +15,21 @@ template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; }
 
 
 int main() {    
-    int n, m; cin >> n >> m;
-    vector<vector<int>> G(n, vector<int>());
-    rep(i, m){
-        int a, b; cin >> a >> b; a--; b--;
-        G[a].push_back(b);
-        G[b].push_back(a);
-    }
-    vector<int> seen(n, -1);
-    seen[0] = 0;
-    queue<int> que;
-    que.push(0);
+    ll r, b, x, y; cin >> r >> b >> x >> y;
 
-    while(!que.empty()){
-        int pos = que.front(); que.pop();
-        for(int e: G[pos]){
-            if(seen[e] != -1) continue;
-            seen[e] = pos;
-            que.push(e);
+    ll ok = 0, ng = (r + b) / 2 + 1;
+    while(ng - ok > 1){
+        ll mid = (ng + ok) / 2;
+        //cout << "mid:" << mid;
+        ll r_ = r - mid, b_ = b - mid;
+        //cout << " r_:" << r_ << " b_:" << b_ << ln;
+        if(r_ < 0 || b_ < 0) ng = mid;
+        else{
+            ll p = r_ / (x - 1) + b_ / (y - 1);
+            //cout << "p:" << p << ln;
+            if(p >= mid) ok = mid;
+            else ng = mid;
         }
     }
-    cout << "Yes" << ln;
-    for(int i=1; i<n; i++){
-        cout << seen[i] + 1 << ln;
-    }
-
-}
+    cout << ok << ln; 
+} 
