@@ -14,17 +14,18 @@ template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; }
 template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }
 
 int main() { 
-    int n, k; cin >> n >> k;
-
-    double res = 0;
-    for(int fir=1; fir<=n; fir++){
-        double score = fir, par = 1;
-        while(score < k){
-            par /= 2;
-            score *= 2;
-        }
-        res += par / n;
+    int n; cin >> n;
+    vector<pll> works;
+    rep(i, n){
+        ll a, b; cin >> a >> b;
+        works.emplace_back(b, a);
     }
-    cout << fixed << setprecision(12);
-    cout << res << ln;
+    sort(all(works));
+    bool fg = true; ll time = 0;
+    rep(i, n){
+        time += works[i].second;
+        if(time > works[i].first) fg = false;
+    }
+    if(fg) cout << "Yes" << ln;
+    else cout << "No" << ln;
 } 

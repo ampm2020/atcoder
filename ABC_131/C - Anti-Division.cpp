@@ -14,17 +14,12 @@ template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; }
 template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }
 
 int main() { 
-    int n, k; cin >> n >> k;
+    ll a, b, c, d; cin >> a >> b >> c >> d;
 
-    double res = 0;
-    for(int fir=1; fir<=n; fir++){
-        double score = fir, par = 1;
-        while(score < k){
-            par /= 2;
-            score *= 2;
-        }
-        res += par / n;
-    }
-    cout << fixed << setprecision(12);
+    ll LCM = c / __gcd(c, d) * d;
+    ll n = b / c + b / d - b / LCM;
+    ll m = (a-1) / c + (a-1) / d - (a-1) / LCM;
+    
+    ll res = (b - a + 1) - (n - m);
     cout << res << ln;
 } 

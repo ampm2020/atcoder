@@ -13,18 +13,23 @@ constexpr long long INF = 1000000009LL;
 template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; } return 0; }
 template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }
 
-int main() { 
-    int n, k; cin >> n >> k;
 
-    double res = 0;
-    for(int fir=1; fir<=n; fir++){
-        double score = fir, par = 1;
-        while(score < k){
-            par /= 2;
-            score *= 2;
-        }
-        res += par / n;
+
+int main(){ 
+    double l, x, y, s, d;
+    cin >> l >> x >> y >> s >> d;
+
+    double res;
+    if(s==d) res = 0;
+    else{
+        double dist_a, dist_b;
+        if(d > s) dist_a = d - s, dist_b = l - dist_a;
+        else dist_b = s - d, dist_a = l - dist_b;
+        double speed_a = x + y, speed_b = y - x;
+        if(speed_b <= 0) res = dist_a / speed_a;
+        else res = min(dist_a / speed_a, dist_b / speed_b);
     }
-    cout << fixed << setprecision(12);
+
+    cout << fixed << setprecision(10);
     cout << res << ln;
-} 
+}
